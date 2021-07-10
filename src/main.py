@@ -1,6 +1,7 @@
 import os
 import suntimes
 import datetime
+import time
 
 
 class App:
@@ -8,16 +9,19 @@ class App:
         self.komorebi_config_file_path = '{}/.Komorebi.prop'.format(os.environ['HOME'])
         self.config_text = None
         self.config_dict = {}
-        with open(self.komorebi_config_file_path, 'r') as file:
-            self.config_text = file.read().strip()
-        self.convert_text_to_dict()
+        self.wallpaper = ''
 
         self.latitude = 43.32472
         self.longitude = 21.90333
         self.altitude = 0  # Not so important
         self.suntimes = suntimes.SunTimes(longitude=self.longitude, latitude=self.latitude, altitude=self.altitude)
-        self.wallpaper = self.determine_wallpaper_from_time()
-        self.modify_config(wallpaper_name=self.wallpaper)
+
+        self.run()
+
+    def read_config(self):
+        with open(self.komorebi_config_file_path, 'r') as file:
+            self.config_text = file.read().strip()
+        self.convert_text_to_dict()
 
     def modify_config(self, wallpaper_name='foggy_sunny_mountain'):
         self.config_dict['WallpaperName'] = wallpaper_name
@@ -47,6 +51,30 @@ class App:
         # Night
         print('Night')
         return 'proba_betmen'
+
+    def run(self):
+        """
+        Main loop of the program, updates the config file approx. every X minutes.
+        :return:
+        """
+
+        x_minutes = 1
+
+        while True:
+            # Last modification might not have been successful, the real config should be reread
+            self.read_config()
+            self.wallpaper = self.config_dict.get('WallpaperName', 'foggy_sunny_mountain')
+            print(self.wallpaper)
+
+            saved_wallpaper = self.wallpaper
+            self.wallpaper = self.determine_wallpaper_from_time()
+
+            if self.wallpaper != saved_wallpaper:
+                # Change the background
+                self.modify_config(self.wallpaper)
+
+            # time.sleep(x_minutes * 60)
+            time.sleep(10)
 
 
 if __name__ == '__main__':
