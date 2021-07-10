@@ -6,14 +6,14 @@ import subprocess
 
 
 class App:
-    def __init__(self):
+    def __init__(self, latitude, longitude):
         self.komorebi_config_file_path = '{}/.Komorebi.prop'.format(os.environ['HOME'])
         self.config_text = None
         self.config_dict = {}
         self.wallpaper = ''
 
-        self.latitude = 43.32472
-        self.longitude = 21.90333
+        self.latitude = latitude
+        self.longitude = longitude
         self.altitude = 0  # Not so important
         self.suntimes = suntimes.SunTimes(longitude=self.longitude, latitude=self.latitude, altitude=self.altitude)
 
@@ -49,11 +49,9 @@ class App:
 
         if rise_time < date_time < set_time:
             # Day
-            print('Day')
             return 'proba_vitez'
 
         # Night
-        print('Night')
         return 'proba_betmen'
 
     def run(self):
@@ -69,7 +67,6 @@ class App:
                 # Last modification might not have been successful, the real config should be reread
                 self.read_config()
                 self.wallpaper = self.config_dict.get('WallpaperName', 'foggy_sunny_mountain')
-                print(self.wallpaper)
 
                 saved_wallpaper = self.wallpaper
                 self.wallpaper = self.determine_wallpaper_from_time()
@@ -78,8 +75,8 @@ class App:
                     # Change the background
                     self.modify_config(self.wallpaper)
 
-                # time.sleep(x_minutes * 60)
-                time.sleep(10)
+                time.sleep(x_minutes * 60)
+                # time.sleep(10)
 
         except KeyboardInterrupt:
             print('User aborted the program, exiting....')
@@ -88,5 +85,10 @@ class App:
 
 
 if __name__ == '__main__':
-    App()
+
+    local_latitude = 43.32472
+    local_longitude = 21.90333
+
+    App(latitude=local_latitude, longitude=local_longitude)
+
     print("The End")
