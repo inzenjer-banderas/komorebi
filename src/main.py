@@ -2,6 +2,7 @@ import os
 import suntimes
 import datetime
 import time
+import subprocess
 
 
 class App:
@@ -15,6 +16,9 @@ class App:
         self.longitude = 21.90333
         self.altitude = 0  # Not so important
         self.suntimes = suntimes.SunTimes(longitude=self.longitude, latitude=self.latitude, altitude=self.altitude)
+
+        # Run komorebi in the background
+        self.komorebi_process_pid = subprocess.Popen(['/System/Applications/komorebi']).pid
 
         self.run()
 
@@ -60,21 +64,27 @@ class App:
 
         x_minutes = 1
 
-        while True:
-            # Last modification might not have been successful, the real config should be reread
-            self.read_config()
-            self.wallpaper = self.config_dict.get('WallpaperName', 'foggy_sunny_mountain')
-            print(self.wallpaper)
+        try:
+            while True:
+                # Last modification might not have been successful, the real config should be reread
+                self.read_config()
+                self.wallpaper = self.config_dict.get('WallpaperName', 'foggy_sunny_mountain')
+                print(self.wallpaper)
 
-            saved_wallpaper = self.wallpaper
-            self.wallpaper = self.determine_wallpaper_from_time()
+                saved_wallpaper = self.wallpaper
+                self.wallpaper = self.determine_wallpaper_from_time()
 
-            if self.wallpaper != saved_wallpaper:
-                # Change the background
-                self.modify_config(self.wallpaper)
+                if self.wallpaper != saved_wallpaper:
+                    # Change the background
+                    self.modify_config(self.wallpaper)
 
-            # time.sleep(x_minutes * 60)
-            time.sleep(10)
+                # time.sleep(x_minutes * 60)
+                time.sleep(10)
+
+        except KeyboardInterrupt:
+            print('User aborted the program, exiting....')
+        except Exception as e:
+            print('Exception in program:\n{}'.format(str(e)))
 
 
 if __name__ == '__main__':
