@@ -181,6 +181,8 @@ namespace Komorebi.OnScreen {
 
 			button_release_event.connect((e) => {
 
+				print("lazar: right click on desktop\n");
+
 				// Hide the bubble menu
 				if(bubbleMenu.opacity > 0) {
 					bubbleMenu.fadeOut();
@@ -231,7 +233,7 @@ namespace Komorebi.OnScreen {
 			});
 
 			focus_out_event.connect(() => {
-
+				print("lazar: Closed the menu\n");
 				// Hide the bubble menu
 				if(bubbleMenu.opacity > 0) {
 					bubbleMenu.fadeOut();
@@ -277,6 +279,7 @@ namespace Komorebi.OnScreen {
 
 		public void initializeConfigFile () {
 
+			print("lazar: init config file\n");
 			setWallpaper();
 
 			if(desktopIcons != null) {
@@ -306,6 +309,8 @@ namespace Komorebi.OnScreen {
 		}
 
 		void setWallpaper() {
+
+			print("lazar: setting wallpaper\n");
 
 			var scaleWidth = screenWidth;
 			var scaleHeight = screenHeight;

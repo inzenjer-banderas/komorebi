@@ -33,6 +33,28 @@ namespace Komorebi {
         return true;
     }
 
+    private static bool task() {
+	    string old_wallpaperName = wallpaperName;
+	    readConfigurationFile();
+
+        print(@"Yay $old_wallpaperName \n");
+
+	    if(old_wallpaperName == wallpaperName) {
+		    print(@"Same\n");
+		}
+	    else {
+		    print(@"Not Same\n");
+				
+		    readWallpaperFile();
+		    updateConfigurationFile();
+
+		    foreach (BackgroundWindow backgroundWindow in backgroundWindows)
+			    backgroundWindow.initializeConfigFile();
+		}
+
+        return true; // false terminates timer
+    }
+
     public static void main (string [] args) {
 
         print("Welcome to Komorebi\n");
@@ -51,7 +73,9 @@ namespace Komorebi {
         GtkClutter.init (ref args);
         Gtk.init (ref args);
 
+	    // print("Before readConfigurationFile\n");
         readConfigurationFile();
+	    // print("After readConfigurationFile\n");
 
         if(OnScreen.enableVideoWallpapers) {
 
@@ -83,6 +107,9 @@ namespace Komorebi {
         for (int i = 0; i < monitorCount; ++i)
             backgroundWindows[i].fadeIn();
 
+	    Timeout.add_seconds(5, task);
+
         Clutter.main();
+
     }
 }

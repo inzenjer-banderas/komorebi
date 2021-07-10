@@ -186,6 +186,8 @@ namespace Komorebi.Utilities {
 
 		print("Reading config file..\n");
 
+		print("Reading config file lazar..\n");
+
 		configKeyFile.load_from_file(configFilePath, KeyFileFlags.NONE);
 
 		var key_file_group = "KomorebiProperties";
@@ -254,6 +256,8 @@ namespace Komorebi.Utilities {
 		// also, make sure the wallpaper name is valid
 		var wallpaperPath = @"/System/Resources/Komorebi/$wallpaperName";
 		var wallpaperConfigPath = @"$wallpaperPath/config";
+
+		print(@"lazar: wallpaper name: $wallpaperName\n");
 
 		if(wallpaperName == null || !File.new_for_path(wallpaperPath).query_exists() ||
 			!File.new_for_path(wallpaperConfigPath).query_exists()) {

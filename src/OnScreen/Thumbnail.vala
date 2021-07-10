@@ -53,10 +53,13 @@ namespace Komorebi.OnScreen {
 			// Signals
 			button_release_event.connect(() => {
 				
+				print("lazar: thumbnail clicked\n");
+
 				wallpaperName = name;
 				showBorder();
 				clicked();
 				
+				// readConfigurationFile();
 				readWallpaperFile();
 				updateConfigurationFile();
 

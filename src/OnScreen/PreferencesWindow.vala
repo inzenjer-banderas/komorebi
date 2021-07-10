@@ -284,7 +284,8 @@ namespace Komorebi.OnScreen {
 		private void setWallpaperNameLabel() {
 
 			var prettyName = beautifyWallpaperName(wallpaperName);
-			currentWallpaperLabel.set_markup(@"<span font='Lato Light 15px' color='#bebebee6'>$prettyName</span>");
+			print("lazar: Setting wallpaper name\n");
+			currentWallpaperLabel.set_markup(@"<span font='Lato Light 15px' color='#bebebee6'>lazar $prettyName</span>");
 		}
 
 		/* Shows the window */
