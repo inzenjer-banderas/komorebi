@@ -2,6 +2,7 @@ import os
 import suntimes
 import datetime
 import time
+import json
 import subprocess
 
 
@@ -86,8 +87,12 @@ class App:
 
 if __name__ == '__main__':
 
-    local_latitude = 43.32472
-    local_longitude = 21.90333
+    with open('geo_config.json', 'r') as json_file:
+        geo_config_dict = json.load(json_file)
+    print(geo_config_dict)
+
+    local_latitude = geo_config_dict['latitude']
+    local_longitude = geo_config_dict['longitude']
 
     App(latitude=local_latitude, longitude=local_longitude)
 
