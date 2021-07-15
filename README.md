@@ -24,29 +24,37 @@ It provides fully customizeable image, video, and web page wallpapers that can b
 ![s1](https://raw.githubusercontent.com/cheesecakeufo/komorebi/master/screenshots/collage.jpg)
 
 
-## How do I install Komorebi?
+## How do I install Komorebi sunset / sunrise changer?
 
-Two ways:
+### Manual Installing (needed in this case)
 
-### Packaged install (easy)
-
-1. Download `Komorebi` from the [Komorebi releases page](https://github.com/cheesecakeufo/komorebi/releases).
-2. Install Komorebi using your favorite package installer (aka. double click on it)
-3. Launch Komorebi!
-
-### Manual Installing (advanced)
-
-Run the following:
+Run the following (the first three commands are probably not needed, I didn't need them):
 ```
 sudo add-apt-repository ppa:gnome3-team/gnome3 -y
 sudo add-apt-repository ppa:vala-team -y
 sudo add-apt-repository ppa:gnome3-team/gnome3-staging -y
-sudo apt install cmake valac libgtk-3-dev libgee-0.8-dev libclutter-gtk-1.0-dev libclutter-1.0-dev libwebkit2gtk-4.0-dev libclutter-gst-3.0-dev
-git clone https://github.com/cheesecakeufo/komorebi.git
+sudo apt install cmake valac libgtk-3-dev libgee-0.8-dev libclutter-gtk-1.0-dev libclutter-1.0-dev libwebkit2gtk-4.0-dev libclutter-gst-3.0-dev python3 python3-pip
+git clone https://github.com/inzenjer-banderas/komorebi.git
 cd komorebi
 mkdir build && cd build
-cmake .. && sudo make install && ./komorebi
+cmake .. && sudo make install
+pip3 install suntimes
 ```
+
+Create 2 Komorebi Wallpaper instances using Komorebi Wallpaper Creator (should now be in
+build dir) with names "day" and "night". The app will use these during day and night, 
+respectively.
+
+To set up geographical location for sunset / sunrise calculation, use src/geo_config.json file.
+
+Everything is run using the Python app. It is located in the src directory inside the
+main project dir. Run the app with:
+```
+python3 src/main.py
+```
+
+That's about it. If you want komorebi to start during startup of the system, install komorebi-python.desktop file
+in ~/.config/autostart.
 
 ## Change Wallpaper & Desktop Preferences
 To change desktop preferences or your wallpaper, right click anywhere on the desktop to show the menu.
