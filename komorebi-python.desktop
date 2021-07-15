@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Komorebi-Python
+Comment=An awesome wallpapers manager according to sunset/sunrise times
+#Keywords=wallpaper;settings; preferences;
+Icon=/System/Resources/Komorebi/komorebi.svg
+Exec=sh -c 'sleep 2 && /data/playground/komorebi/komorebi-python'
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;System;
+X-GNOME-Autostart-enabled=true
+
