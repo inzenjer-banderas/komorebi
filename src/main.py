@@ -49,10 +49,10 @@ class App:
 
         if rise_time < date_time < set_time:
             # Day
-            return 'proba_vitez'
+            return 'day'
 
         # Night
-        return 'proba_betmen'
+        return 'night'
 
     def run(self):
         """
