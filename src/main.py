@@ -87,9 +87,8 @@ class App:
 
 if __name__ == '__main__':
 
-    with open('geo_config.json', 'r') as json_file:
+    with open('{}/geo_config.json'.format(os.path.dirname(os.path.realpath(__file__))), 'r') as json_file:
         geo_config_dict = json.load(json_file)
-    print(geo_config_dict)
 
     local_latitude = geo_config_dict['latitude']
     local_longitude = geo_config_dict['longitude']
